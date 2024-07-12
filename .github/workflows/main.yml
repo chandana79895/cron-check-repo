@@ -1,0 +1,14 @@
+name: Cron check
+
+on:
+  schedule:
+    - cron: '* * * * *' 
+
+jobs:
+  cron_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List Files
+        run: |
+          pwd
+          ls    
