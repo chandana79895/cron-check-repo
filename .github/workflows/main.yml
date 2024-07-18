@@ -1,15 +1,35 @@
 name: Cron check
 
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: '*/5 * * * *' # Every 5 minutes
+    - cron: '0 0 * * *'   # Every day at midnight
+    - cron: '0 12 * * MON' # Every Monday at noon
 
 jobs:
   cron_check:
     runs-on: ubuntu-latest
     steps:
-      - name: List Files
+      - name: Set up Git
+        uses: actions/checkout@v2
+
+      - name: List Files for develop branch
+        if: github.ref == 'refs/heads/develop'
         run: |
+          echo "Running on develop branch"
           pwd
-          ls    
+          ls
+
+      - name: List Files for main branch
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "Running on main branch"
+          pwd
+          ls
+
+      - name: List Files for feature branch
+        if: github.ref == 'refs/heads/feature'
+        run: |
+          echo "Running on feature branch"
+          pwd
+          ls
